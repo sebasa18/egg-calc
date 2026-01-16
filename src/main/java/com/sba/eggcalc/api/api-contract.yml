@@ -1,0 +1,80 @@
+openapi: 3.0.3
+info:
+  version: 1.0
+  x-api-name: Egg-Move-Calc-API
+  x-api-type: domain
+  contact:
+    email: Sebastian.Bekkvik.Aas@gmail.com
+  title: EMC - Egg Move Calculator API
+  description: >-
+    Endpoints for retrieving egg move calculations via frontend.
+servers:
+  - description: API Endpoint URL
+    url: none
+
+paths:
+  /calc:  # Rename
+    get:
+      tags:
+        - Charge Items
+      summary: Create a new charge item
+      description: |
+        Get a chain of pairings to give the specified species the specified move via egg moves.
+      operationId: "getEggMoveChain"
+
+      parameters:
+        #query
+        - $ref: "#/components/parameters/speciesId"
+        - $ref: "#/components/parameters/moveId"
+
+      responses:
+        '200':
+          description: Egg move chain calculated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/eggChainResponse"
+
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  parameters:
+    speciesId:
+      type: query
+      name: speciesId
+      description: The ID of the species.
+      required: true
+      schema:
+        type: integer
+    moveId:
+      type: query
+      name: moveId
+      description: The ID of the move.
+      required: true
+      schema:
+        type: integer
+
+  schemas:
+    eggChainResponse:
+      description: Successful Response
+
+  responses:
+    BadRequest:
+      description: Bad Request
+    Unauthorized:
+      description: Unauthorized
+    Forbidden:
+      description: Forbidden
+    NotFound:
+      description: Not Found
+    ServerError:
+      description: Internal Server Error
