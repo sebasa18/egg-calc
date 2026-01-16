@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 1.0
+  version: "1.0"
   x-api-name: Egg-Move-Calc-API
   x-api-type: domain
   contact:
@@ -13,11 +13,11 @@ servers:
     url: none
 
 paths:
-  /calc:  # Rename
+  /calc: # Rename
     get:
       tags:
-        - Charge Items
-      summary: Create a new charge item
+        - Egg Move Chain
+      summary: Get an egg move chain
       description: |
         Get a chain of pairings to give the specified species the specified move via egg moves.
       operationId: "getEggMoveChain"
@@ -49,19 +49,19 @@ paths:
 components:
   parameters:
     speciesId:
-      type: query
       name: speciesId
       description: The ID of the species.
       required: true
       schema:
         type: integer
+      in: query
     moveId:
-      type: query
       name: moveId
       description: The ID of the move.
       required: true
       schema:
         type: integer
+      in: query
 
   schemas:
     eggChainResponse:
