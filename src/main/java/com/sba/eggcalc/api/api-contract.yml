@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: "1.0"
+  version: "1.1"
   x-api-name: Egg-Move-Calc-API
   x-api-type: domain
   contact:
@@ -46,6 +46,36 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 
+  /calc/moves:
+    get:
+      tags:
+        - Egg Moves
+      summary: Get all egg moves for a species
+      description: |
+        Get all moves that the specified species can learn via breeding.
+      operationId: "getEggMovesForSpecies"
+
+      parameters:
+        #query
+        - $ref: "#/components/parameters/speciesId"
+
+      responses:
+        '200':
+          description: Egg moves retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/eggMovesResponse"
+
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
 components:
   parameters:
     speciesId:
@@ -66,6 +96,11 @@ components:
   schemas:
     eggChainResponse:
       description: Successful Response
+    eggMovesResponse:
+      description: Successful Response
+      type: array
+      items:
+        $ref: '#/components/parameters/moveId'
 
   responses:
     BadRequest:
