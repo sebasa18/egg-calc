@@ -1,32 +1,30 @@
 package com.sba.eggcalc.backend;
 
+import com.sba.eggcalc.database.SpeciesEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import org.jooq.DSLContext;
-import org.jooq.impl.DSL;
+import org.springframework.data.repository.CrudRepository;
 
 @Repository
 @Validated
 @Transactional(propagation = Propagation.MANDATORY)
-public class EggMoveDao {
+public interface EggMoveDao() extends CrudRepository<SpeciesEntity, Integer> {
 
-  private final DSLContext dslContext;
 
-  public GroupRegisterJooqDao(DSLContext dslContext) {
-    this.dslContext = dslContext;
-  }
 
   /*
    * WHAT IS NEEDED
    * - Get species name by id
    * select name from species where monId = id
+   * JDBC gives me this one for free
    *
    * - Get move id by name
    * select id from moves where name = moveName
+   * select id from moves where name = moveName and eggMove = true
    *
-   * - Get species with a given move not egg (maybe filter out preevos)
+   * - Get species with a given move not egg
    * select monId from learnsets where moveId = id and eggMove = false
    *
    * - Get compatible species
