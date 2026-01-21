@@ -2,6 +2,8 @@ package com.sba.eggcalc.backend;
 
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public class EMCController {  // implements generated api class
 
   private final EggMoveCalc eggMoveCalc;
@@ -15,7 +17,7 @@ public class EMCController {  // implements generated api class
       Integer speciesId,
       Integer moveId
   ) {
-
+    List<String> result = eggMoveCalc.findEggMoveChain(speciesId, moveId);
     return ResponseEntity.ok(new EggChainResponse());
   }
 }
