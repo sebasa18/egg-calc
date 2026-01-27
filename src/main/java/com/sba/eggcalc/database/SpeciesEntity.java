@@ -11,7 +11,6 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "SPECIES")
 public class SpeciesEntity {
 
