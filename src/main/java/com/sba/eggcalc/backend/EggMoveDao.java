@@ -18,6 +18,8 @@ import java.util.List;
 @Transactional(propagation = Propagation.MANDATORY)
 public interface EggMoveDao extends CrudRepository<SpeciesEntity, Integer> {
 
+  Integer getMonIdByName(@NotBlank String speciesName);
+
   Integer getMoveIdByName(@NotBlank String moveName);
 
   @NotNull
@@ -29,15 +31,11 @@ public interface EggMoveDao extends CrudRepository<SpeciesEntity, Integer> {
           "(select * from SPECIES where monId=LEARNSETS.monId and group1Id=0)")
   List<Integer> getSpeciesWithLevelMove(@NotNull Integer moveId);
 
+  @Query("SELECT monId FROM LEARNSETS INNER JOIN SPECIES ON moveId = :moveId AND eggMove = TRUE")
+  List<Integer> getSpeciesWithEggMove(@NotNull Integer moveId);
+
   @Query("SELECT s2.monId FROM SPECIES s1 INNER JOIN SPECIES s2 ON s1.monId = :speciesId AND " +
           "(s1.group1Id = s2.group1Id OR s1.group1Id = s2.group2Id OR s1.group2Id = s2.group1Id OR s1.group2Id = s2.group2Id)")
   List<Integer> getCompatibleSpecies(@NotNull Integer speciesId);
 
-
-  /*
-   * WHAT REMAINS TO IMPLEMENT
-   * - Get species given another (list of?) species and move, compatible with species and has move as egg move (step of search)
-   * select monId from learnsets inner join species on moveId = id and eggMove = true and
-   *
-   */
 }
