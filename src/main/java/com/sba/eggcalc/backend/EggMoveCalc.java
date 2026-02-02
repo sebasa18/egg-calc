@@ -22,6 +22,7 @@ public class EggMoveCalc {
   List<Integer> findEggMoveChain(Integer speciesId, Integer moveId) {
 
     if (speciesId == 9999 || speciesId == 10000) return List.of(); // Manaphy/ditto check
+    if (speciesId == 100) return List.of(speciesId);  // Smeargle check
 
     boolean hasLevelMove = !eggMoveDao.eggMoveByMonIdAndMoveId(speciesId, moveId);
     if (hasLevelMove) return List.of(speciesId); // Target has move as level-up move
@@ -34,6 +35,10 @@ public class EggMoveCalc {
       return List.of();
     }
 
+    if (goalGroup1 == 1) {
+      // Field/Smeargle check
+      return List.of(speciesId, 100);
+    }
     List<Integer> origins = eggMoveDao.getSpeciesWithLevelMove(moveId);
 
     DefaultMutableTreeNode top = new DefaultMutableTreeNode(speciesId);
