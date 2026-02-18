@@ -39,19 +39,18 @@ public class EggMoveCalc {
       // Field/Smeargle check
       return List.of(speciesId, 100);
     }
-    List<Integer> origins = eggMoveDao.getSpeciesWithLevelMove(moveId);
 
     DefaultMutableTreeNode top = new DefaultMutableTreeNode(speciesId);
     JTree visited = new JTree();
 
-    while (true) {
-      HashSet<Integer> rename = new HashSet<>();
-      HashSet<Integer> temp = new HashSet<>();
-      for (Integer currentSpeciesId : origins) {
-        temp.addAll(eggMoveDao.getCompatibleSpecies(currentSpeciesId));
-        temp.retainAll(eggMoveDao.getSpeciesWithEggMove(currentSpeciesId));
-        rename.addAll(temp);
-      }
+    HashSet<Integer> current = Set.of(eggMoveDao.getCompatibleSpecies(speciesId));
+    HashSet<Integer> level = eggMoveDao.getSpeciesWithLevelMove(moveId);
+    HashSet<Integer> egg = eggMoveDao.getSpeciesWithEggMove(moveId);
+
+    while (current.intersection(level).isEmpty()) {
+	for (Integer id : current) {
+	    // TODO: make a new hashset from the species compatible with each entry in current.  Somehow make a tree of it as you go?
+        }
     }
   }
 }
