@@ -1,17 +1,14 @@
 package com.sba.eggcalc.database;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "SPECIES")
 public class SpeciesEntity {
 
@@ -21,7 +18,7 @@ public class SpeciesEntity {
   private Long monId;
 
   @Column("name")
-  @NotBlank
+  @NotNull
   private String name;
 
   @Column("canBeFemale")
